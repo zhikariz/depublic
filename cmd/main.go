@@ -23,10 +23,10 @@ func main() {
 	db, err := database.ConnectToPostgres(cfg)
 	checkError(err)
 
-	publicRoutes := builder.BuildPublicRoutes(db)
-	_ = builder.BuildPrivateRoutes()
+	publicRoutes := builder.BuildPublicRoutes(cfg, db)
+	privateRoutes := builder.BuildPrivateRoutes(cfg, db)
 
-	srv := server.NewServer(cfg, publicRoutes)
+	srv := server.NewServer(cfg, publicRoutes, privateRoutes)
 	srv.Run()
 	srv.GracefulShutdown()
 }

@@ -6,9 +6,10 @@ import (
 )
 
 type Config struct {
-	Env      string         `env:"ENV" envDefault:"dev"`
-	Port     string         `env:"PORT" envDefault:"8080"`
-	Postgres PostgresConfig `envPrefix:"POSTGRES_"`
+	Env          string         `env:"ENV" envDefault:"dev"`
+	Port         string         `env:"PORT" envDefault:"8080"`
+	Postgres     PostgresConfig `envPrefix:"POSTGRES_"`
+	JWTSecretKey string         `env:"JWT_SECRET_KEY" envDefault:"secret"`
 }
 
 type PostgresConfig struct {
