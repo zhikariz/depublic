@@ -17,8 +17,14 @@ func BuildPrivateRoutes(cfg *config.Config, db *gorm.DB) []*router.Route {
 }
 
 func BuildPublicRoutes(cfg *config.Config, db *gorm.DB) []*router.Route {
+	transactionRepository := repository.NewTransactionRepository(db)
 	userRepository := repository.NewUserRepository(db)
+
 	userService := service.NewUserService(cfg, userRepository)
+	transactionService := service.NewTransactionService(transactionRepository)
+
 	userHandler := handler.NewHandler(userService)
-	return router.PublicRoutes(userHandler)
+	transactionHandler := handler.NewTransactionHandler(transactionService)
+
+	return router.PublicRoutes(userHandler, transactionHandler)
 }

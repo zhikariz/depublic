@@ -13,7 +13,7 @@ type Route struct {
 	Handler echo.HandlerFunc
 }
 
-func PublicRoutes(userHandler *handler.UserHandler) []*Route {
+func PublicRoutes(userHandler *handler.UserHandler, transactionHandler *handler.TransactionHandler) []*Route {
 	return []*Route{
 		{
 			Method:  http.MethodPost,
@@ -24,6 +24,11 @@ func PublicRoutes(userHandler *handler.UserHandler) []*Route {
 			Method:  http.MethodPost,
 			Path:    "/generate-password",
 			Handler: userHandler.GeneratePassword,
+		},
+		{
+			Method:  http.MethodGet,
+			Path:    "/users/:id/transactions",
+			Handler: transactionHandler.FindTransactionByUserID,
 		},
 	}
 }
